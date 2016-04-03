@@ -1,0 +1,16 @@
+{
+    "name": "drips/debugger",
+    "description": "Debugger für PHP-Anwendungen",
+    "keywords": ["debug", "debugger", "error", "exception"],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4",
+        "drips/utils": ">=0.1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drips\\Debugger\\": "src"
+        },
+        "files": ["src/dump.php"]
+    }
+}
