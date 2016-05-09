@@ -34,14 +34,8 @@ function dump($var, $indentBy = 2, $indentationLevel = 0)
         if ($indentationLevel == 0) {
             echo '<pre style="background-color:#434a54;color:#f5f7fa;padding:1em;">'.PHP_EOL;
         }
-        $parentIndentation = '';
-        $indentation = '';
-        for ($i = 0; $i < $indentationLevel; $i++) {
-            $parentIndentation .= ' ';
-        }
-        for ($i = 0; $i < $indentBy; $i++) {
-            $indentation .= ' ';
-        }
+        $parentIndentation = str_repeat(" ", $indentationLevel);
+        $indentation = str_repeat(" ", $indentBy);
         if ($var === null) {
             echo '<span style="'.$nullStyle.'">NULL</span>'.PHP_EOL;
         } elseif (is_array($var)) {
