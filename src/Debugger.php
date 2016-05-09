@@ -61,7 +61,7 @@ class Debugger
                 $new[] = ($i + 1).' '.$codesplit[$i];
             }
         }
-        return '<pre><code>'.implode("\n", $new)."\n</pre></code>";
+        return '<pre><code>'.implode("\n", $new)."\n</code></pre>";
     }
 
     /**
