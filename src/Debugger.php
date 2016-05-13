@@ -27,14 +27,70 @@ class Debugger
     protected $buffer;
 
     /**
+     * Beinhaltet ob der Debugger (bzw. die Debugseite) angezeigt werden soll oder nicht
+     * @var [type]
+     */
+    protected $enabled = true;
+
+    /**
      * Erzeugt eine neue Debugger-Instanz und registriert Error- und Exception-Handler
      */
     public function __construct()
     {
-        set_error_handler([Handler::class, "handleError"]);
-        set_exception_handler([Handler::class, "handleException"]);
+        $this->enable();
         $this->buffer = new OutputBuffer;
         $this->buffer->start();
+    }
+
+    /**
+     * Aktiviert den Debugger bzw. die Debugseite
+     */
+    public function enable()
+    {
+        set_error_handler([Handler::class, "handleError"]);
+        set_exception_handler([Handler::class, "handleException"]);
+        $this->enabled = true;
+    }
+
+    /**
+     * Deaktiviert den Debugger bzw. die Debugseite
+     */
+    public function disable()
+    {
+        restore_error_handler();
+        restore_exception_handler();
+        $this->enabled = false;
+    }
+
+    /**
+     * Aktiviert PHP-Fehlermeldungen
+     */
+    public function enableErrors()
+    {
+        error_reporting(E_ALL);
+        ini_set("display_errors", "on");
+        ini_set("display_startup_errors", "on");
+    }
+
+    /**
+     * Deaktiviert PHP-Fehlermeldungen
+     */
+    public function disableErrors()
+    {
+        $this->disable();
+        error_reporting(0);
+        ini_set("display_errors", "off");
+        ini_set("display_startup_errors",  "off");
+    }
+
+    /**
+     * Gibt zurück, ob der Debugger bzw. die Debugseite aktiviert ist
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
     }
 
     /**
@@ -79,7 +135,7 @@ class Debugger
                 }
                 echo $error["desc"].PHP_EOL."\t".$error["file"].":".$error["line"].PHP_EOL;
             }
-        } elseif(Handler::hasErrors()){
+        } elseif(Handler::hasErrors() && $this->isEnabled()){
             require_once __DIR__.'/layout.phtml';
         } else {
             echo $this->buffer->getContent();
