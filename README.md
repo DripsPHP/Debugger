@@ -22,6 +22,21 @@ $debugger = new Debugger;
 > Der Debugger beginnt logischerweise erst dann Fehler abzufangen, sobald er angelegt wurde.  
 > *Einige Fehler können über den Debugger nicht abgefangen werden, wie z.B.: Syntaxfehler.*
 
+Der Debugger ist auch notwendig für das Abfangen von Exceptions mittels Handler, weil der `Debugger` den `Handler` registriert. Dementsprechend sollte zwingend ein `Debugger`-Objekt erzeugt werden.  
+Die Debugseite kann jederzeit aktiviert und deaktiviert werden. (Standardmäßig ist diese aktiviert!)  
+Dafür stehen folgende Methoden zur Verfügung:
+
+ - `enable()` - aktiviert die Debugseite
+ - `disable()` - deaktiviert die Debugseite
+ - `isEnabled()` - gibt zurück ob die Debugseite aktiviert ist oder nicht
+
+## PHP-Fehlermeldungen (de)aktivieren
+
+Zusätzlich verfügt der Debugger über die Möglichkeit PHP-Fehlermeldungen ein- bzw. auszuschalten. Hierfür stehen folgende Methoden zur Verfügung:
+
+ - `enableErrors()` - aktiviert PHP-Fehlermeldungen
+ - `disableErrors()` - deaktiviert PHP-Fehlermeldungen (aber auch die Debugseite!)
+
 ## Exceptions abfangen
 
 Sobald eine Exception geworfen wird, die nicht abgefangen wurde, wird ein Event ausgelöst. Dieses Event kann abgefangen werden und anschließend separat behandelt werden.
