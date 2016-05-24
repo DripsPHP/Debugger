@@ -77,7 +77,8 @@ function dump($var, $indentBy = 2, $indentationLevel = 0) {
             if ($indentationLevel == 0) {
                 $output .= '</pre>';
                 if(!in_array('dump', \Drips\Debugbar\Debugbar::getInstance()->getTabs())) {
-                    \Drips\Debugbar\Debugbar::getInstance()->registerTab('dump', 'Dump', '');
+                    \Drips\Debugbar\Debugbar::getInstance()->registerTab('dump', 'Dump');
+                    \Drips\Debugbar\Debugbar::getInstance()->appendTab("dump", 'wos isn des');
                 }
                 \Drips\Debugbar\Debugbar::getInstance()->appendTab("dump", $output);
             }
