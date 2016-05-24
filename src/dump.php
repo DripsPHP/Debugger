@@ -46,7 +46,7 @@ function dump($var, $indentBy = 2, $indentationLevel = 0) {
                 $len = sizeof($array);
                 $output .= $type.' ('.$len.') '.'{';
                 if ($len > 0) {
-                    echo PHP_EOL;
+                    $output .= PHP_EOL;
                     foreach ($array as $key => $value) {
                         $output .= $parentIndentation.$indentation.'['.$key.'] =&gt; ';
                         $output .= dump($value, $indentBy, $indentationLevel + $indentBy);
@@ -61,7 +61,7 @@ function dump($var, $indentBy = 2, $indentationLevel = 0) {
                 $len = sizeof($properties);
                 $output .= $type.'<span style="'.$classStyle.'">('.$reflect->getName().')</span>'.' ('.$len.') '.'{'.PHP_EOL;
                 foreach ($properties as $property) {
-                    echo $parentIndentation.$indentation.'<span style="'.$propertyStyle.'">['.($property->isStatic() ? 'static ' : '').($property->isPublic() ? 'public ' : ($property->isProtected() ? 'protected ' : ($property->isPrivate() ? 'private ' : ''))).'$'.$property->getName().']</span> =&gt; ';
+                    $output .= $parentIndentation.$indentation.'<span style="'.$propertyStyle.'">['.($property->isStatic() ? 'static ' : '').($property->isPublic() ? 'public ' : ($property->isProtected() ? 'protected ' : ($property->isPrivate() ? 'private ' : ''))).'$'.$property->getName().']</span> =&gt; ';
                     $property->setAccessible(true);
                     $output .= dump($property->getValue($var), $indentBy, $indentationLevel + $indentBy);
                 }
@@ -76,11 +76,11 @@ function dump($var, $indentBy = 2, $indentationLevel = 0) {
             }
             if ($indentationLevel == 0) {
                 $output .= '</pre>';
-                if(!in_array('dump', \Drips\Debugbar\Debugbar::getInstance()->getTabs())) {
-                    \Drips\Debugbar\Debugbar::getInstance()->registerTab('dump', 'Dump');
-                    \Drips\Debugbar\Debugbar::getInstance()->appendTab("dump", 'wos isn des');
+                $instance = \Drips\Debugbar\Debugbar::getInstance();
+                if(!array_key_exists('dump', $instance->getTabs())) {
+                    $instance->registerTab('dump', 'Dump');
                 }
-                \Drips\Debugbar\Debugbar::getInstance()->appendTab("dump", $output);
+                $instance->appendTab("dump", $output);
             }
             
             return $output;
