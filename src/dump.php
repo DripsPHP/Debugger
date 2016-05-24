@@ -76,6 +76,7 @@ function dump($var, $indentBy = 2, $indentationLevel = 0) {
             }
             if ($indentationLevel == 0) {
                 $output .= '</pre>';
+                \Drips\Debugbar\Debugbar::getInstance()->appendTab("dump", $output);
             }
             
             return $output;
