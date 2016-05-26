@@ -11,6 +11,6 @@
         "psr-4": {
             "Drips\\Debugger\\": "src"
         },
-        "files": ["src/dump.php"]
+        "files": ["src/dump.php", "drips.php"]
     }
 }
