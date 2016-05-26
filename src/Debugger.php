@@ -28,27 +28,51 @@ class Debugger
 
     /**
      * Beinhaltet ob der Debugger (bzw. die Debugseite) angezeigt werden soll oder nicht
-     * @var [type]
+     *
+     * @var bool
      */
     protected $enabled = true;
 
     /**
+     * Singleton-Instanz
+     *
+     * @var Debugger
+     */
+    protected static $instance;
+
+    /**
+     * Singleton getInstance - liefert das Debugger-Objekt zurück
+     *
+     * @return Debugger
+     */
+    public static function getInstance()
+    {
+        if(static::$instance === null){
+            static::$instance = new static;
+        }
+
+        return static::$instance;
+    }
+
+    /**
      * Erzeugt eine neue Debugger-Instanz und registriert Error- und Exception-Handler
      */
-    public function __construct()
+    private function __construct()
     {
         $this->enable();
         $this->buffer = new OutputBuffer;
         $this->buffer->start();
     }
 
+    private function __clone() {}
+
     /**
      * Aktiviert den Debugger bzw. die Debugseite
      */
     public function enable()
     {
-        set_error_handler([Handler::class, "handleError"]);
-        set_exception_handler([Handler::class, "handleException"]);
+        set_error_handler([Handler::class, 'handleError']);
+        set_exception_handler([Handler::class, 'handleException']);
         $this->enabled = true;
     }
 
@@ -68,8 +92,8 @@ class Debugger
     public function enableErrors()
     {
         error_reporting(E_ALL);
-        ini_set("display_errors", "on");
-        ini_set("display_startup_errors", "on");
+        ini_set('display_errors', 'on');
+        ini_set('display_startup_errors', 'on');
     }
 
     /**
@@ -79,8 +103,8 @@ class Debugger
     {
         $this->disable();
         error_reporting(0);
-        ini_set("display_errors", "off");
-        ini_set("display_startup_errors",  "off");
+        ini_set('display_errors', 'off');
+        ini_set('display_startup_errors',  'off');
     }
 
     /**
@@ -112,7 +136,7 @@ class Debugger
         $new = array();
         for ($i = $from; $i < $to - 1; $i++) {
             if ($i + 1 == $line) {
-                $new[] = "<span class='highlight'>".($i + 1).' '.$codesplit[$i].'</span>';
+                $new[] = '<span class="highlight">'.($i + 1).' '.$codesplit[$i].'</span>';
             } else {
                 $new[] = ($i + 1).' '.$codesplit[$i];
             }
@@ -129,11 +153,11 @@ class Debugger
         if(Handler::hasErrors() && PHP_SAPI == "cli"){
             foreach(Handler::getErrors() as $error){
                 if($error["isException"]){
-                    echo "[".get_class($error["context"])."]: ";
+                    echo '['.get_class($error['context']).']: ';
                 } else {
-                    echo "[ERROR#".$error["number"]."]: ";
+                    echo '[ERROR#'.$error['number'].']: ';
                 }
-                echo $error["desc"].PHP_EOL."\t".$error["file"].":".$error["line"].PHP_EOL;
+                echo $error['desc'].PHP_EOL."\t".$error['file'].':'.$error['line'].PHP_EOL;
             }
         } elseif(Handler::hasErrors() && $this->isEnabled()){
             require_once __DIR__.'/layout.phtml';

@@ -5,7 +5,7 @@ require_once __DIR__."/vendor/autoload.php";
 use Drips\Debugger\Debugger;
 use Drips\Debugger\Handler;
 
-$debugger = new Debugger;
+$debugger = Debugger::getInstance();
 
 // var_dump vs dump
 //var_dump($_SERVER);

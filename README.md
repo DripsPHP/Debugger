@@ -17,7 +17,7 @@ Wird der Debugger verwendet, so erzeugt dieser eine Fehlerseite wenn es zu einem
 <?php
 use Drips\Debugger\Debugger;
 
-$debugger = new Debugger;
+$debugger = Debugger::getInstance();
 ```
 > Der Debugger beginnt logischerweise erst dann Fehler abzufangen, sobald er angelegt wurde.  
 > *Einige Fehler können über den Debugger nicht abgefangen werden, wie z.B.: Syntaxfehler.*
@@ -69,3 +69,5 @@ Im Gegensatz zu den bestehenden PHP-Funktionen verfügt diese über eine formati
 $var = array("a", "b", 1, 3);
 dump($var);
 ```
+
+> Die Ausgabe von `dump()` wird in die Debugbar umgeleitet und somit nur Kombination mit der Debugbar verwendbar!

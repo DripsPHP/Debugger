@@ -7,6 +7,9 @@
         "php": ">=5.4",
         "drips/utils": "dev-master"
     },
+    "suggest": {
+        "drips/debugbar": "Für die Verwendung von dump()"
+    },
     "autoload": {
         "psr-4": {
             "Drips\\Debugger\\": "src"
