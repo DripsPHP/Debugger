@@ -4,17 +4,18 @@
  * Created by Prowect
  * Author: Lars Müller
  * Date: 03.05.15 - 13:13.
- * Copyright Prowect
+ * Copyright Prowect.
  */
 
 /**
- * Alternative zu var_dump mit formatierter HTML-Ausgabe
+ * Alternative zu var_dump mit formatierter HTML-Ausgabe.
  *
  * @param   mixed  $var
- * @param  integer $indentBy
- * @param  integer $indentationLevel
+ * @param  int $indentBy
+ * @param  int $indentationLevel
  */
-function dump($var, $indentBy = 2, $indentationLevel = 0) {
+function dump($var, $desc = '', $indentBy = 2, $indentationLevel = 0)
+{
     $stringStyle = 'color:#8cc152;';
     $propertyStyle = 'color:#967adc;';
     $classStyle = 'color:#f6bb42;';
@@ -32,12 +33,15 @@ function dump($var, $indentBy = 2, $indentationLevel = 0) {
     } else {
         if (class_exists('\Drips\Debugbar\Debugbar')) {
             $output = '';
-            
+            if (!empty($desc)) {
+                $output .= '<h2 style="margin-top: 25px;">'.$desc.'</h2>';
+            }
+
             if ($indentationLevel == 0) {
                 $output .= '<pre style="background-color:#434a54;color:#f5f7fa;padding:1em;">'.PHP_EOL;
             }
-            $parentIndentation = str_repeat(" ", $indentationLevel);
-            $indentation = str_repeat(" ", $indentBy);
+            $parentIndentation = str_repeat(' ', $indentationLevel);
+            $indentation = str_repeat(' ', $indentBy);
             if ($var === null) {
                 $output .= '<span style="'.$nullStyle.'">NULL</span>'.PHP_EOL;
             } elseif (is_array($var)) {
@@ -49,7 +53,7 @@ function dump($var, $indentBy = 2, $indentationLevel = 0) {
                     $output .= PHP_EOL;
                     foreach ($array as $key => $value) {
                         $output .= $parentIndentation.$indentation.'['.$key.'] =&gt; ';
-                        $output .= dump($value, $indentBy, $indentationLevel + $indentBy);
+                        $output .= dump($value, '', $indentBy, $indentationLevel + $indentBy);
                     }
                     $output .= $parentIndentation;
                 }
@@ -77,12 +81,12 @@ function dump($var, $indentBy = 2, $indentationLevel = 0) {
             if ($indentationLevel == 0) {
                 $output .= '</pre>';
                 $instance = \Drips\Debugbar\Debugbar::getInstance();
-                if(!array_key_exists('dump', $instance->getTabs())) {
+                if (!array_key_exists('dump', $instance->getTabs())) {
                     $instance->registerTab('dump', 'Dump');
                 }
-                $instance->appendTab("dump", $output);
+                $instance->appendTab('dump', $output);
             }
-            
+
             return $output;
         }
     }
