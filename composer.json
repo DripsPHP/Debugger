@@ -15,5 +15,8 @@
             "Drips\\Debugger\\": "src"
         },
         "files": ["src/dump.php", "drips.php"]
+    },
+    "autoload-dev": {
+        "files": ["config.php"]
     }
 }
