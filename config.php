@@ -1,3 +1,5 @@
 <?php
 
-define("DRIPS_DEBUG", true);
+if (!defined('DRIPS_DEBUG')) {
+    define('DRIPS_DEBUG', true);
+}
