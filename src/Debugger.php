@@ -31,7 +31,7 @@ class Debugger
      *
      * @var bool
      */
-    protected $enabled = true;
+    protected $enabled = false;
 
     /**
      * Singleton-Instanz
@@ -59,9 +59,17 @@ class Debugger
      */
     private function __construct()
     {
-        $this->enable();
+        set_error_handler([Handler::class, 'handleError']);
+        set_exception_handler([Handler::class, 'handleException']);
         $this->buffer = new OutputBuffer;
         $this->buffer->start();
+        $this->disableErrors();
+        if(defined('DRIPS_DEBUG')){
+            if(DRIPS_DEBUG){
+                $this->enable();
+                $this->enableErrors();
+            }
+        }
     }
 
     private function __clone() {}
@@ -71,8 +79,6 @@ class Debugger
      */
     public function enable()
     {
-        set_error_handler([Handler::class, 'handleError']);
-        set_exception_handler([Handler::class, 'handleException']);
         $this->enabled = true;
     }
 
@@ -81,8 +87,6 @@ class Debugger
      */
     public function disable()
     {
-        restore_error_handler();
-        restore_exception_handler();
         $this->enabled = false;
     }
 
