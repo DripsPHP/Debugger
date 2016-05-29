@@ -13,7 +13,7 @@ class DebuggerTest extends PHPUnit_Framework_TestCase
     public function testDebugger()
     {
         $debugger = Debugger::getInstance();
-        $this->assertTrue($debugger->isEnabled());
+        $this->assertFalue($debugger->isEnabled());
         $debugger->disable();
         $this->assertFalse($debugger->isEnabled());
         $debugger->enable();
