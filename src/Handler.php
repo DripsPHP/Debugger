@@ -61,7 +61,7 @@ abstract class Handler extends Event
      *
      * @param Exception $exception
      */
-    public static function handleException(Throwable $exception)
+    public static function handleException($exception)
     {
         static::handleError($exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine(), $exception, true);
     }
