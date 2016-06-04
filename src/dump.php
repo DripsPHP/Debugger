@@ -65,9 +65,12 @@ function dump($var, $desc = '', $indentBy = 2, $indentationLevel = 0)
                 $len = sizeof($properties);
                 $output .= $type.'<span style="'.$classStyle.'">('.$reflect->getName().')</span>'.' ('.$len.') '.'{'.PHP_EOL;
                 foreach ($properties as $property) {
-                    $output .= $parentIndentation.$indentation.'<span style="'.$propertyStyle.'">['.($property->isStatic() ? 'static ' : '').($property->isPublic() ? 'public ' : ($property->isProtected() ? 'protected ' : ($property->isPrivate() ? 'private ' : ''))).'$'.$property->getName().']</span> =&gt; ';
                     $property->setAccessible(true);
-                    $output .= dump($property->getValue($var), $indentBy, $indentationLevel + $indentBy);
+                    if(!($property->getValue($var) instanceof $var)){
+                        $output .= $parentIndentation.$indentation.'<span style="'.$propertyStyle.'">['.($property->isStatic() ? 'static ' : '').($property->isPublic() ? 'public ' : ($property->isProtected() ? 'protected ' : ($property->isPrivate() ? 'private ' : ''))).'$'.$property->getName().']</span> =&gt; ';
+                        $output .= dump($property->getValue($var), '', $indentBy, $indentationLevel + $indentBy);
+                    }
+
                 }
                 $output .= $parentIndentation.'}'.PHP_EOL;
             } elseif (is_string($var)) {
