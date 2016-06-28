@@ -74,7 +74,7 @@ function dump($var, $desc = '', $indentBy = 2, $indentationLevel = 0)
                 }
                 $output .= $parentIndentation.'}'.PHP_EOL;
             } elseif (is_string($var)) {
-                $output .= gettype($var).' ('.strlen($var).') <span style="'.$stringStyle.'">"'.$var.'"</span>'.PHP_EOL;
+                $output .= gettype($var).' ('.strlen($var).') <span style="'.$stringStyle.'">"'.htmlentities($var).'"</span>'.PHP_EOL;
             } elseif (is_bool($var)) {
                 $output .= gettype($var).' <span style="'.$boolStyle.'">'.(($var == 1) ? 'true' : 'false').'</span>'.PHP_EOL;
             } else {
