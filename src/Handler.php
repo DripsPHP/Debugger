@@ -18,8 +18,9 @@ use Drips\Utils\Event;
  * Beinhaltet Funktionen zum Behandeln von PHP-Fehlern und Exceptions und kann
  * somit als Error- und Exceptionhandler eingesetzt werden.
  */
-abstract class Handler extends Event
+class Handler
 {
+    use Event;
     /**
      * Beinhaltet alle Fehlerinformationen über entstandene PHP-Fehler und Exceptions
      *
