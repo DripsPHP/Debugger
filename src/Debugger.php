@@ -20,7 +20,7 @@ use Drips\Utils\OutputBuffer;
 class Debugger
 {
     /**
-     * Beinhaltet ein OutputBuffer-Objekt zum buffern der Ausgabe
+     * Beinhaltet ein OutputBuffer-Objekt zum Buffern der Ausgabe
      *
      * @var OutputBuffer
      */
