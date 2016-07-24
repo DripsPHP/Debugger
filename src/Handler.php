@@ -9,6 +9,8 @@
 
 namespace Drips\Debugger;
 
+use Drips\Utils\Event;
+
 /**
  * Class Handler.
  *
