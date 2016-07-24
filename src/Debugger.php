@@ -16,6 +16,8 @@ use Drips\Utils\OutputBuffer;
  *
  * Dient zum Debuggen von PHP-Anwendungen. Erzeugt eine formatierte Ausgabe mit
  * Fehlermeldungen, sofern diese vom Handler erfasst wurden.
+ *
+ * @package Drips\Debugger
  */
 class Debugger
 {
@@ -47,7 +49,7 @@ class Debugger
      */
     public static function getInstance()
     {
-        if(static::$instance === null){
+        if (static::$instance === null) {
             static::$instance = new static;
         }
 
@@ -64,8 +66,8 @@ class Debugger
         $this->buffer = new OutputBuffer;
         $this->buffer->start();
         $this->disableErrors();
-        if(defined('DRIPS_DEBUG')){
-            if(DRIPS_DEBUG){
+        if (defined('DRIPS_DEBUG')) {
+            if (DRIPS_DEBUG) {
                 $this->enable();
                 $this->enableErrors();
             }
@@ -108,7 +110,7 @@ class Debugger
         $this->disable();
         error_reporting(0);
         ini_set('display_errors', 'off');
-        ini_set('display_startup_errors',  'off');
+        ini_set('display_startup_errors', 'off');
     }
 
     /**
@@ -140,12 +142,12 @@ class Debugger
         $new = array();
         for ($i = $from; $i < $to - 1; $i++) {
             if ($i + 1 == $line) {
-                $new[] = '<span class="highlight">'.($i + 1).' '.$codesplit[$i].'</span>';
+                $new[] = '<span class="highlight">' . ($i + 1) . ' ' . $codesplit[$i] . '</span>';
             } else {
-                $new[] = ($i + 1).' '.$codesplit[$i];
+                $new[] = ($i + 1) . ' ' . $codesplit[$i];
             }
         }
-        return '<pre><code>'.implode("\n", $new)."\n</code></pre>";
+        return '<pre><code>' . implode("\n", $new) . "\n</code></pre>";
     }
 
     /**
@@ -154,17 +156,17 @@ class Debugger
     public function __destruct()
     {
         $this->buffer->end();
-        if(Handler::hasErrors() && PHP_SAPI == "cli"){
-            foreach(Handler::getErrors() as $error){
-                if($error["isException"]){
-                    echo '['.get_class($error['context']).']: ';
+        if (Handler::hasErrors() && PHP_SAPI == "cli") {
+            foreach (Handler::getErrors() as $error) {
+                if ($error["isException"]) {
+                    echo '[' . get_class($error['context']) . ']: ';
                 } else {
-                    echo '[ERROR#'.$error['number'].']: ';
+                    echo '[ERROR#' . $error['number'] . ']: ';
                 }
-                echo $error['desc'].PHP_EOL."\t".$error['file'].':'.$error['line'].PHP_EOL;
+                echo $error['desc'] . PHP_EOL . "\t" . $error['file'] . ':' . $error['line'] . PHP_EOL;
             }
-        } elseif(Handler::hasErrors() && $this->isEnabled()){
-            require_once __DIR__.'/layout.phtml';
+        } elseif (Handler::hasErrors() && $this->isEnabled()) {
+            require_once __DIR__ . '/layout.phtml';
         } else {
             echo $this->buffer->getContent();
         }

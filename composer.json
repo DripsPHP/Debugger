@@ -1,19 +1,27 @@
 {
-    "name": "drips/debugger",
-    "description": "Debugger für PHP-Anwendungen",
-    "keywords": ["debug", "debugger", "error", "exception"],
-    "license": "MIT",
-    "require": {
-        "php": ">=5.4",
-        "drips/utils": "dev-master"
+  "name": "drips/debugger",
+  "description": "Debugger für PHP-Anwendungen",
+  "keywords": [
+    "debug",
+    "debugger",
+    "error",
+    "exception"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=5.4",
+    "drips/utils": "^1.0"
+  },
+  "suggest": {
+    "drips/debugbar": "Für die Verwendung von dump()"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drips\\Debugger\\": "src"
     },
-    "suggest": {
-        "drips/debugbar": "Für die Verwendung von dump()"
-    },
-    "autoload": {
-        "psr-4": {
-            "Drips\\Debugger\\": "src"
-        },
-        "files": ["src/dump.php", "drips.php"]
-    }
+    "files": [
+      "src/dump.php",
+      "drips.php"
+    ]
+  }
 }

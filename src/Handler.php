@@ -9,9 +9,6 @@
 
 namespace Drips\Debugger;
 
-use Throwable;
-use Drips\Utils\Event;
-
 /**
  * Class Handler.
  *
@@ -49,10 +46,10 @@ class Handler
             'isException' => $isException,
         );
         $handled = false;
-        if($isException){
+        if ($isException) {
             $handled = static::call(get_class($errcontext), $handled);
         }
-        if(!$handled){
+        if (!$handled) {
             static::$errors[] = $error;
         }
     }

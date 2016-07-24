@@ -10,7 +10,7 @@
 /**
  * Alternative zu var_dump mit formatierter HTML-Ausgabe.
  *
- * @param   mixed  $var
+ * @param   mixed $var
  * @param  int $indentBy
  * @param  int $indentationLevel
  */
@@ -34,52 +34,52 @@ function dump($var, $desc = '', $indentBy = 2, $indentationLevel = 0)
         if (class_exists('\Drips\Debugbar\Debugbar')) {
             $output = '';
             if (!empty($desc)) {
-                $output .= '<h2 style="margin-top: 25px;">'.$desc.'</h2>';
+                $output .= '<h2 style="margin-top: 25px;">' . $desc . '</h2>';
             }
 
             if ($indentationLevel == 0) {
-                $output .= '<pre style="background-color:#434a54;color:#f5f7fa;padding:1em;">'.PHP_EOL;
+                $output .= '<pre style="background-color:#434a54;color:#f5f7fa;padding:1em;">' . PHP_EOL;
             }
             $parentIndentation = str_repeat(' ', $indentationLevel);
             $indentation = str_repeat(' ', $indentBy);
             if ($var === null) {
-                $output .= '<span style="'.$nullStyle.'">NULL</span>'.PHP_EOL;
+                $output .= '<span style="' . $nullStyle . '">NULL</span>' . PHP_EOL;
             } elseif (is_array($var)) {
-                $array = (array) $var;
+                $array = (array)$var;
                 $type = 'array';
                 $len = sizeof($array);
-                $output .= $type.' ('.$len.') '.'{';
+                $output .= $type . ' (' . $len . ') ' . '{';
                 if ($len > 0) {
                     $output .= PHP_EOL;
                     foreach ($array as $key => $value) {
-                        $output .= $parentIndentation.$indentation.'['.$key.'] =&gt; ';
+                        $output .= $parentIndentation . $indentation . '[' . $key . '] =&gt; ';
                         $output .= dump($value, '', $indentBy, $indentationLevel + $indentBy);
                     }
                     $output .= $parentIndentation;
                 }
-                $output .= '}'.PHP_EOL;
+                $output .= '}' . PHP_EOL;
             } elseif (is_object($var)) {
                 $type = 'object';
                 $reflect = new ReflectionClass($var);
                 $properties = $reflect->getProperties();
                 $len = sizeof($properties);
-                $output .= $type.'<span style="'.$classStyle.'">('.$reflect->getName().')</span>'.' ('.$len.') '.'{'.PHP_EOL;
+                $output .= $type . '<span style="' . $classStyle . '">(' . $reflect->getName() . ')</span>' . ' (' . $len . ') ' . '{' . PHP_EOL;
                 foreach ($properties as $property) {
                     $property->setAccessible(true);
-                    if(!($property->getValue($var) instanceof $var)){
-                        $output .= $parentIndentation.$indentation.'<span style="'.$propertyStyle.'">['.($property->isStatic() ? 'static ' : '').($property->isPublic() ? 'public ' : ($property->isProtected() ? 'protected ' : ($property->isPrivate() ? 'private ' : ''))).'$'.$property->getName().']</span> =&gt; ';
+                    if (!($property->getValue($var) instanceof $var)) {
+                        $output .= $parentIndentation . $indentation . '<span style="' . $propertyStyle . '">[' . ($property->isStatic() ? 'static ' : '') . ($property->isPublic() ? 'public ' : ($property->isProtected() ? 'protected ' : ($property->isPrivate() ? 'private ' : ''))) . '$' . $property->getName() . ']</span> =&gt; ';
                         $output .= dump($property->getValue($var), '', $indentBy, $indentationLevel + $indentBy);
                     }
 
                 }
-                $output .= $parentIndentation.'}'.PHP_EOL;
+                $output .= $parentIndentation . '}' . PHP_EOL;
             } elseif (is_string($var)) {
-                $output .= gettype($var).' ('.strlen($var).') <span style="'.$stringStyle.'">"'.htmlentities($var).'"</span>'.PHP_EOL;
+                $output .= gettype($var) . ' (' . strlen($var) . ') <span style="' . $stringStyle . '">"' . htmlentities($var) . '"</span>' . PHP_EOL;
             } elseif (is_bool($var)) {
-                $output .= gettype($var).' <span style="'.$boolStyle.'">'.(($var == 1) ? 'true' : 'false').'</span>'.PHP_EOL;
+                $output .= gettype($var) . ' <span style="' . $boolStyle . '">' . (($var == 1) ? 'true' : 'false') . '</span>' . PHP_EOL;
             } else {
                 $type = gettype($var);
-                $output .= $type.' ('.sizeof($var).') <span style="'.${str_replace(' t', 'T', gettype($var)).'Style'}.'">'.$var.'</span>'.PHP_EOL;
+                $output .= $type . ' (' . sizeof($var) . ') <span style="' . ${str_replace(' t', 'T', gettype($var)) . 'Style'} . '">' . $var . '</span>' . PHP_EOL;
             }
             if ($indentationLevel == 0) {
                 $output .= '</pre>';

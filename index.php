@@ -1,19 +1,20 @@
 <?php
 
-require_once __DIR__."/vendor/autoload.php";
+require_once __DIR__ . "/vendor/autoload.php";
 
 use Drips\Debugger\Debugger;
-use Drips\Debugger\Handler;
 
 $debugger = Debugger::getInstance();
+$debugger->enableErrors();
+$debugger->enable();
 
 // var_dump vs dump
 //var_dump($_SERVER);
 //dump($_SERVER);
 //die();
+echo dump($debugger);
 
 echo "Test";
-echo ASDF;
 
 // eigene Fehlerbehandlung
 /*
@@ -23,4 +24,5 @@ Handler::on("Exception", function(){
 });
 */
 
-throw new Exception("This is an exception!");
+
+//throw new Exception("This is an exception!");

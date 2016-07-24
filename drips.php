@@ -3,8 +3,8 @@
 use Drips\App;
 use Drips\Debugger\Debugger;
 
-if(class_exists('Drips\App')){
-	App::on("create", function(App $app){
-		$app->debugger = Debugger::getInstance();
-	});
+if (class_exists('Drips\App')) {
+    App::on("create", function (App $app) {
+        $app->debugger = Debugger::getInstance();
+    });
 }
